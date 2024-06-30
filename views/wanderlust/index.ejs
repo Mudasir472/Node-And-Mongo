@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wanderlust</title>
+  </head>
+  <body>
+    <h3>Listings</h3>
+    <form method="get" action="/listings/new">
+        <button>Create new</button>
+    </form>
+    <ul>
+      <%for(data of initData){%>
+      <li>
+        <a href="http://localhost:8080/listings/<%= data._id %>/show"><p><%= data.title %></p></a>
+      </li>
+      <%}%>
+    </ul>
+  </body>
+</html>
