@@ -3,7 +3,10 @@ const app = express();
 const path = require("path");
 app.set("views",path.join(__dirname,'views'))
 app.set("view engine","ejs");
+const ejsMate = require('ejs-mate')
+app.engine('ejs',ejsMate);
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname,"/public")))
 
 var methodOverride = require('method-override')
 app.use(methodOverride('_method'))
@@ -12,6 +15,7 @@ app.use(methodOverride('_method'))
 const Listing = require("./modals/listing.js");
 const mongoose = require("mongoose");
 const { name } = require("ejs");
+const exp = require("constants");
 main()
   .then(() => {
     console.log("mongo connects successfully");
@@ -73,7 +77,6 @@ app.get("/listings/:id/edit",async (req,res)=>{
 app.put("/listings/:id",async (req,res)=>{
     let {id} = req.params;
     let updatedData = await Listing.findByIdAndUpdate(id,{...req.body})
-    console.log(updatedData)
     res.redirect(`/listings/${id}/show`);
     
 });

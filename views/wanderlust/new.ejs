@@ -1,20 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wanderlust</title>
-</head>
+<% layout('/layouts/boilerplate') -%>
 <body>
-    <h3>Create New</h3>
-    <form method="post" action="/listings">
-        <input type="text" name="title" placeholder="Enter Title"><br><br>
-        <input type="text" name="description" placeholder="Enter Description"><br><br>
-        <input type="number" name="price" placeholder="Enter Price"><br><br>
-        <input type="text" name="location" placeholder="Enter Location"><br><br>
-        <input type="text" name="country" placeholder="Enter Country"><br><br>
-        <button>Submit</button>
-    </form>
-    
+  <h3>Create New</h3>
+  <form method="post" action="/listings">
+    <div class="row">
+      <div class="col-8 offset-2">
+        <div class="mb-2">
+          <label for="title" class="form-label">Title</label>
+          <input
+            required
+            type="text"
+            class="form-control"
+            name="title"
+            placeholder="Enter Title"
+          /><br /><br />
+        </div>
+        <div class="mb-2">
+          <label for="description" class="form-label">Description</label>
+          <textarea
+            type="text"
+            name="description"
+            class="form-control"
+            placeholder="Enter Description"
+          ></textarea
+          ><br /><br />
+        </div>
+        <div class="row">
+          <div class="mb-2 col-8">
+            <label for="price" class="form-label">Price</label>
+            <input
+              type="number"
+              name="price"
+              class="form-control"
+              placeholder="Enter Price"
+              required
+            /><br /><br />
+          </div>
+          <div class="mb-2 col-4">
+            <label for="location" class="form-label">Location</label>
+            <input
+              type="text"
+              name="location"
+              class="form-control"
+              placeholder="Enter Location"
+              required
+            /><br /><br />
+          </div>
+        </div>
+        <div class="mb-2">
+          <label for="country" class="form-label">Country</label>
+          <input
+            type="text"
+            class="form-control"
+            name="country"
+            placeholder="Enter Country"
+            required
+          /><br /><br />
+        </div>
+        <button type="submit" class="btn btn-danger">Submit</button>
+      </div>
+    </div>
+  </form>
 </body>
-</html>

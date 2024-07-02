@@ -1,0 +1,53 @@
+body{
+    color: black;
+}
+.ico i{
+    color: red;
+    font-size: 2rem;
+}
+.bi{
+    font-size: 1.5rem!important;
+}
+.links a{
+    color: black;
+}
+/* footer */
+footer{
+    background-color: azure;
+}
+
+/* card */
+.card{
+    margin-bottom: 2rem !important;
+    border: none !important;
+
+}
+.index-img img{
+    border-radius: 12px !important;
+    height: 18rem;
+}
+a{
+    text-decoration: none;
+}
+
+.card-img-overlay{
+    opacity: 0;
+}
+.card-img-overlay:hover{
+    opacity: 0.2;
+    background-color: white;
+}
+
+/* show  */
+
+.show-img img{
+    height: 17rem;
+    width: 39rem;
+}
+
+.show-head{
+    width: 49%;
+}
+.showBtns{
+    width: 47%;
+}
