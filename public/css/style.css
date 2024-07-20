@@ -25,6 +25,7 @@ footer{
 .index-img img{
     border-radius: 12px !important;
     height: 18rem;
+    width: 25rem;
 }
 a{
     text-decoration: none;
@@ -34,6 +35,7 @@ a{
     opacity: 0;
 }
 .card-img-overlay:hover{
+    width: 25rem;
     opacity: 0.2;
     background-color: white;
 }
