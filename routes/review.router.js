@@ -13,7 +13,10 @@ router.post("/review", wrapAsync( async (req,res)=>{
     listing.review.push(newReview);
     await listing.save();
     await newReview.save();
-    console.log("new review recorded");
+    if(!newReview){
+        req.flash('error','Review not found')
+    }
+    req.flash('success','Review Created Successsfully')
     res.redirect(`/listings/${id}/show`);
 }));
 
@@ -22,7 +25,11 @@ router.post("/review", wrapAsync( async (req,res)=>{
 router.delete("/delete/:reviewId",wrapAsync(async (req,res)=>{
     let {id,reviewId} = req.params;
     await Listing.findByIdAndUpdate(id, {$pull: {review: reviewId}});
-    await Review.findByIdAndDelete(reviewId).then(()=>{console.log("review deletes successfully")})
+    await Review.findByIdAndDelete(reviewId);
+    if(!Review){
+        req.flash('error','Review not found')
+    }
+    req.flash('success','Review Deleted Successsfully')
     res.redirect(`/listings/${id}/show`);
 }));
 

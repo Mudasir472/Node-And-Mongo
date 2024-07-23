@@ -8,6 +8,23 @@ app.engine('ejs', ejsMate);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "/public")))
 const ExpressError = require("./ExpressError.js");
+const cookieParser = require("cookie-parser");
+
+var flash = require('connect-flash');
+
+//session
+const session = require("express-session");
+app.use(session({
+    secret: 'mysecretcode',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        expires: Date.now + 7 * 24 * 60 * 60 * 1000,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true
+    }
+  }));
+
 
 //routers
 const listingRouter = require("./routes/listing.router.js");
@@ -21,9 +38,10 @@ const mongoose = require("mongoose");
 const { name } = require("ejs");
 const exp = require("constants");
 const { wrap } = require("module");
+
 main()
     .then(() => {
-        console.log("mongo connects successfully");
+        // console.log("mongo connects successfully");
     })
     .catch((err) => console.log(err));
 
@@ -36,23 +54,30 @@ app.get("/", (req, res) => {
     res.send("I am at root");
 })
 
-// listing Routes here
-app.use("/listings",listingRouter);
-//review routers here 
-app.use("/listings/:id",reviewRouter);
+//flash MW
+app.use(flash());
+app.use((req,res,next)=>{
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
+})
 
-app.all("*",(req,res,next)=>{
-    next(new ExpressError(404,"page not found"))
+// listing Routes here
+app.use("/listings", listingRouter);
+//review routers here 
+app.use("/listings/:id", reviewRouter);
+
+app.all("*", (req, res, next) => {
+    next(new ExpressError(404, "page not found"))
 });
 
-
-
+//cookies
+app.use(cookieParser());
 //middle wares for error handling
 
 app.use((err, req, res, next) => {
-    let {statusCode=500,msg="default error occur"} = err;
-    res.status(statusCode).render("error.ejs",{msg});
-
+    let { statusCode = 500, msg = "default error occur" } = err;
+    res.status(statusCode).render("error.ejs", { msg });
 })
 
 const port = 8080;
