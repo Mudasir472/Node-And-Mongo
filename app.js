@@ -11,6 +11,16 @@ const ExpressError = require("./ExpressError.js");
 const cookieParser = require("cookie-parser");
 
 var flash = require('connect-flash');
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./modals/user.js");
+//routers
+const listingRouter = require("./routes/listing.router.js");
+const reviewRouter = require("./routes/review.router.js");
+const userRouter = require('./routes/user.router.js');
+
+var methodOverride = require('method-override')
+app.use(methodOverride('_method'));
 
 //session
 const session = require("express-session");
@@ -23,15 +33,16 @@ app.use(session({
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true
     }
-  }));
+}));
 
-
-//routers
-const listingRouter = require("./routes/listing.router.js");
-const reviewRouter = require("./routes/review.router.js");
-
-var methodOverride = require('method-override')
-app.use(methodOverride('_method'));
+//middlewares for passport AUTHENTICATION
+app.use(passport.initialize());
+app.use(passport.session());
+// use static authenticate method of model in LocalStrategy
+passport.use(new LocalStrategy(User.authenticate()));
+// use static serialize and deserialize of model for passport session support
+passport.serializeUser(User.serializeUser()); //remembers the session when login
+passport.deserializeUser(User.deserializeUser());//forget the session when log out
 
 // Mongoose
 const mongoose = require("mongoose");
@@ -56,17 +67,22 @@ app.get("/", (req, res) => {
 
 //flash MW
 app.use(flash());
-app.use((req,res,next)=>{
+app.use((req, res, next) => {
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
+    res.locals.currUser = req.user;
     next();
 })
 
+//          <=========== ALL ROUTES ===========>
 // listing Routes here
 app.use("/listings", listingRouter);
 //review routers here 
 app.use("/listings/:id", reviewRouter);
+//  user routes here
+app.use("/",userRouter);
 
+// page not found MW
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "page not found"))
 });

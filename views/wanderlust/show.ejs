@@ -2,14 +2,15 @@
 
   <body>
     <div class="showCont d-flex flex-column justify-content-center align-items-center">
-      <h2 class="show-head mb-2">Listing Details</h2>
+      <h2 class="show-head mb-2">
+        <%= data.title %>
+      </h2>
       <div class="card listing-card show-img">
         <img src="<%= data.image %>" class=" card-img-top" alt="listing image" />
         <div class="card-body">
           <p class="card-text">
-          <p><b>
-              <%= data.title %>
-            </b></p>
+          <p>Owned By : <%= data.owner.username %>
+          </p>
           <p>
             <%= data.description %>
           </p>
@@ -24,16 +25,18 @@
           </p>
         </div>
       </div>
-      <div class="showBtns d-flex justify-content-start align-items-start">
-        <form method="get" action="/listings/<%= data._id %>/edit">
-          <button class="btn btn-danger mx-3">Edit</button>
-        </form>
-        <br />
-        <form method="post" action="/listings/<%= data._id %>?_method=DELETE">
-          <button class="btn btn-dark">Delete</button>
-        </form>
-      </div>
-      <hr>
+      <% if(currUser && currUser._id.equals(data.owner._id)) { %>
+        <div class="showBtns d-flex justify-content-start align-items-start">
+          <form method="get" action="/listings/<%= data._id %>/edit">
+            <button class="btn btn-danger mx-3">Edit</button>
+          </form>
+          <br />
+          <form method="post" action="/listings/<%= data._id %>?_method=DELETE">
+            <button class="btn btn-dark">Delete</button>
+          </form>
+        </div>
+        <% } %>
+          <hr>
     </div>
     <hr>
     <div class=" show-reviews row">
@@ -42,7 +45,7 @@
         <% for(review of data.review){ %>
           <div class="card mb-3 col-6">
             <div class="card-body">
-              <h5 class="card-title">Mudasir Bhat</h5>
+              <h5 class="card-title"><%= review.auther.username %></h5>
               <p class="card-text">
                 <%= review.comment %>
               </p>
@@ -58,25 +61,26 @@
           <% } %>
       </div>
     </div>
-    <hr>
-    <div class="reviews row">
-      <div class="col-8 offset-2">
-        <form action="/listings/<%= data._id %>/review" method="post" novalidate class="needs-validation">
-          <div class="mb-3">
-            <label for="rating" class="form-label">Rate Us</label>
-            <input class="form-control" type="range" min="1" max="5" name="review[rating]" id="rating">
-          </div>
-          <div class="mb-3">
-            <label class="form-label" for="comment">Comment us</label>
-            <textarea class="form-control" placeholder="Your Comment" name="review[comment]" id="comment" rows="7"
-              cols="12" required></textarea>
-          </div>
-          <div class="invalid-feedback">
-            Country should be valid.
-          </div>
-          <button class="btn btn-danger">Submit</button>
-        </form>
-      </div>
-    </div>
 
+    <% if(currUser) {%>
+      <div class="reviews row">
+        <div class="col-8 offset-2">
+          <form action="/listings/<%= data._id %>/review" method="post" novalidate class="needs-validation">
+            <div class="mb-3">
+              <label for="rating" class="form-label">Rate Us</label>
+              <input class="form-control" type="range" min="1" max="5" name="review[rating]" id="rating">
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="comment">Comment us</label>
+              <textarea class="form-control" placeholder="Your Comment" name="review[comment]" id="comment" rows="7"
+                cols="12" required></textarea>
+            </div>
+            <div class="invalid-feedback">
+              Country should be valid.
+            </div>
+            <button class="btn btn-danger">Submit</button>
+          </form>
+        </div>
+      </div>
+      <% } %>
   </body>

@@ -1,33 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>wanderlust</title>
-  </head>
-  <body>
-    <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
-        <a class="navbar-brand ico" href="#"><i class="bi bi-compass"></i></a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-link" aria-current="page" href="/listings">Home</a>
-            <a class="nav-link" href="/listings">All listings</a>
-            <a class="nav-link" href="/listings/new">New Listing</a>
-          </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>wanderlust</title>
+</head>
+
+<body>
+  <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand ico" href="#"><i class="bi bi-compass"></i></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link" aria-current="page" href="/listings">Home</a>
+          <a class="nav-link" href="/listings">All listings</a>
+          <a class="nav-link" href="/listings/new">New Listing</a>
+        </div>
+        <div class="navbar-nav ms-auto">
+          <% if(!currUser){ %>
+            <a class="nav-link" aria-current="page" href="/login">Login</a>
+            <a class="nav-link" href="/signup">Signup</a>
+            <% } %>
+              <%if(currUser){ %>
+                <a class="nav-link" href="/logout">Logout</a>
+                <%}%>
         </div>
       </div>
-    </nav>
-  </body>
+    </div>
+  </nav>
+</body>
+
 </html>

@@ -40,12 +40,17 @@ const listingSchema = new Schema({
     type: String,
     required: true,
   },
-  review: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Review"
-    }
-  ]
+  review:
+    [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Review"
+      }
+    ],
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  }
 });
 
 // delete middleware => when listing delete , all reviews should be deleted

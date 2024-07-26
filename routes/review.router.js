@@ -3,6 +3,7 @@ const router = express.Router({mergeParams: true});
 const wrapAsync = require("../utils/wrapAsync.js");
 const Listing = require("../modals/listing.js");
 const Review = require("../modals/Review.js");
+const { isLoggedIn, isAuther } = require("../Middleware.js");
 
 // post review route
 router.post("/review", wrapAsync( async (req,res)=>{
@@ -10,6 +11,7 @@ router.post("/review", wrapAsync( async (req,res)=>{
     let {id} = req.params;
     let listing = await Listing.findById(id);
     let newReview = new Review(req.body.review);  //all data from user saves in db through  it
+    newReview.auther = req.user._id;    //when review created , it saves the info of auther of review
     listing.review.push(newReview);
     await listing.save();
     await newReview.save();
@@ -22,7 +24,7 @@ router.post("/review", wrapAsync( async (req,res)=>{
 
 // delete review route
 
-router.delete("/delete/:reviewId",wrapAsync(async (req,res)=>{
+router.delete("/delete/:reviewId",isLoggedIn,isAuther, wrapAsync(async (req,res)=>{
     let {id,reviewId} = req.params;
     await Listing.findByIdAndUpdate(id, {$pull: {review: reviewId}});
     await Review.findByIdAndDelete(reviewId);
