@@ -4,29 +4,13 @@ const wrapAsync = require("../utils/wrapAsync.js");
 const User = require("../modals/user.js");
 const passport = require("passport");
 const {saveRedirectUrl} = require("../Middleware.js");
+const userController = require("../controllers/users.js");
+
 //signup router
 router.get("/signup", (req, res) => {
     res.render("user/signup.ejs");
 });
-router.post("/signup", wrapAsync(async (req, res) => {
-    try {
-        let { username, email, password } = req.body;
-        const newUser = new User({ username, email });
-        const registeredUser = await User.register(newUser, password);
-        req.login(registeredUser,(err)=>{
-            if(err){
-                next(err);
-            }
-            req.flash("success", "registered successfully")
-            res.redirect("/listings");
-        });
-    }
-    catch (e) {
-        console.log(e.message)
-        req.flash("error", e.message);
-        res.redirect("/signup");
-    }
-}));
+router.post("/signup", wrapAsync(userController.signUp));
 //login router
 router.get("/login", (req, res) => {
     res.render("user/login.ejs");
