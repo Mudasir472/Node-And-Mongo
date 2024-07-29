@@ -9,7 +9,7 @@
     <%for(data of initData){%>
     <a href="/listings/<%= data._id %>/show">
       <div class="card index-img listing-card" style="width: 18rem">
-        <img src="<%= data.image %>" class=" card-img-top" alt="listing image" />
+        <img src="<%= data.image.url %>" class=" card-img-top" alt="listing image" />
         <div class="card-img-overlay"></div>
         <div class="card-body">
           <p class="card-text"><%= data.title %></p>

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 const wrapAsync = require("../utils/wrapAsync.js");
@@ -8,21 +9,23 @@ const cookieParser = require("cookie-parser");
 const { isLoggedIn, isOwner } = require("../Middleware.js");
 const path = require("path");
 const listingController = require("../controllers/listings.js");
+const {storage} = require("../cloudConfig.js");
+const multer  = require('multer')
+const upload = multer({ storage })
 
 router.use(cookieParser("secretCode"));
 
-router.route("/")
+// router.route("/")
 // index Route
-.get(wrapAsync(listingController.index))
-// create Post route
-.post(isLoggedIn, wrapAsync(listingController.create))
+router.get("/",wrapAsync(listingController.index))
 
+router.post("/",upload.single("listing[image]"),wrapAsync(listingController.create));
 
-router.route("/:id")
+router.route("/:id")          
 // Update Route
-.put(isOwner, wrapAsync(listingController.update))
+.put(isOwner, upload.single("listing[image]"), wrapAsync(listingController.update))
 // delete route
-.delete(isLoggedIn, isOwner, wrapAsync(listingController.delete));
+router.delete("/:id",isLoggedIn, isOwner, wrapAsync(listingController.delete));
 
 
 // Show Route

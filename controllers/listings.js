@@ -3,8 +3,8 @@ const { listingSchema } = require("../Schema.js");
 
 // Index
 module.exports.index = async (req, res) => {
-    res.cookie("name", "Mudasir");
-    res.cookie("visitHere", "yes", { signed: true });
+    // res.cookie("name", "Mudasir");
+    // res.cookie("visitHere", "yes", { signed: true });
     // console.log(req.cookies); //prints unsigned cookie
     // console.log(req.signedCookies);//prints signed cookies
     const initData = await Listing.find({});
@@ -21,20 +21,13 @@ module.exports.show = async (req, res) => {
     }).populate("owner");
     res.render("wanderlust/show.ejs", { data });
 }
-
 //create
 module.exports.create = async (req, res) => {
-    const result = listingSchema.validate(req.body);
-    let { title, description, price, location, country } = req.body;
-    let newData = new Listing({
-        title: title,
-        description: description,
-        price: price,
-        location: location,
-        country: country
-    })
+    const result = listingSchema.validate(req.body.listing);
+    let newData = new Listing(req.body.listing)
     newData.owner = req.user._id; // as owner should be into the listing
-    // let newdata = new Listing(req.body.listings)
+    newData.image.url = req.file.path;
+    newData.image.filename = req.file.filename;
     await newData.save();
     if (!newData) {
         req.flash('error', 'Listing not found')
@@ -54,6 +47,11 @@ module.exports.edit = async (req, res) => {
 module.exports.update = async (req, res) => {
     let { id } = req.params;
     let updatedData = await Listing.findByIdAndUpdate(id, { ...req.body })
+    if (typeof req.file !== "undefined") {
+        updatedData.image.url = req.file.path;
+        updatedData.image.filename = req.file.filename;
+        updatedData.save();
+        }
     if (!updatedData) {
         req.flash('error', 'Listing not found')
     }

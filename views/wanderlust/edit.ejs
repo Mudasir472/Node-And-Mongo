@@ -1,7 +1,7 @@
 <% layout('/layouts/boilerplate') -%>
 <body>
   <h3>Fill to update</h3>
-  <form method="post" action="/listings/<%= data._id %>?_method=PUT">
+  <form method="post" action="/listings/<%= data._id %>?_method=PUT" enctype="multipart/form-data">
     <div class="row">
       <div class="col-8 offset-2">
         <div class="mb-2">
@@ -21,6 +21,10 @@
             name="description"
             value="<%= data.description %>"
           /><br /><br />
+        </div>
+        <div class="mb-2">
+          <label for="image" class="form-label">Upload new Image</label>
+          <input type="file" class="form-control" name="listing[image]">
         </div>
         <div class="row">
           <div class="mb-2 col-8">

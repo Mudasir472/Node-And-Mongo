@@ -1,4 +1,5 @@
 const express = require("express");
+const bodyParser = require('body-parser');
 const app = express();
 const path = require("path");
 app.set("views", path.join(__dirname, 'views'))
@@ -9,6 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "/public")))
 const ExpressError = require("./ExpressError.js");
 const cookieParser = require("cookie-parser");
+app.use(cookieParser());
 
 var flash = require('connect-flash');
 const passport = require("passport");
@@ -75,12 +77,13 @@ app.use((req, res, next) => {
 })
 
 //          <=========== ALL ROUTES ===========>
+
 // listing Routes here
 app.use("/listings", listingRouter);
 //review routers here 
 app.use("/listings/:id", reviewRouter);
 //  user routes here
-app.use("/",userRouter);
+app.use("/", userRouter);
 
 // page not found MW
 app.all("*", (req, res, next) => {
@@ -91,10 +94,10 @@ app.all("*", (req, res, next) => {
 app.use(cookieParser());
 //middle wares for error handling
 
-app.use((err, req, res, next) => {
-    let { statusCode = 500, msg = "default error occur" } = err;
-    res.status(statusCode).render("error.ejs", { msg });
-})
+// app.use((err, req, res, next) => {
+//     let { statusCode = 500, msg = "default error occur" } = err;
+//     res.status(statusCode).render("error.ejs", { msg });
+// })
 
 const port = 8080;
 app.listen(port, () => {
