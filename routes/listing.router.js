@@ -2,12 +2,8 @@ require('dotenv').config();
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 const wrapAsync = require("../utils/wrapAsync.js");
-const { listingSchema } = require("../Schema.js");
-const Listing = require("../modals/listing.js");
-const ExpressError = require("../ExpressError.js");
 const cookieParser = require("cookie-parser");
 const { isLoggedIn, isOwner } = require("../Middleware.js");
-const path = require("path");
 const listingController = require("../controllers/listings.js");
 const {storage} = require("../cloudConfig.js");
 const multer  = require('multer')

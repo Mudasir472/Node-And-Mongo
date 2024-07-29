@@ -27,7 +27,7 @@ app.use(methodOverride('_method'));
 //session
 const session = require("express-session");
 app.use(session({
-    secret: 'mysecretcode',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
