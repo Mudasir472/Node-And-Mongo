@@ -52,14 +52,16 @@ const { name } = require("ejs");
 const exp = require("constants");
 const { wrap } = require("module");
 
+const dbUrl = process.env.ATLAS_DB_URL;
 main()
     .then(() => {
-        // console.log("mongo connects successfully");
+        console.log("mongo connects successfully");
     })
     .catch((err) => console.log(err));
 
 async function main() {
     await mongoose.connect("mongodb://127.0.0.1:27017/mudduWanderlust");
+    // await mongoose.connect(dbUrl);
 }
 
 // Routes

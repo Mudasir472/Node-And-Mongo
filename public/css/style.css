@@ -57,3 +57,8 @@ a{
 .starReview i{
     font-size: medium;
 }
+
+.edit-image-preview img{
+    width: 18rem;
+    height: 9rem;
+}

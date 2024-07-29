@@ -1,4 +1,5 @@
-
+//
+const User = require("../modals/user");
 module.exports.signUp = async (req, res) => {
     try {
         let { username, email, password } = req.body;

@@ -1,62 +1,41 @@
 <% layout('/layouts/boilerplate') -%>
-<body>
-  <h3>Fill to update</h3>
-  <form method="post" action="/listings/<%= data._id %>?_method=PUT" enctype="multipart/form-data">
-    <div class="row">
-      <div class="col-8 offset-2">
-        <div class="mb-2">
-          <label for="title" class="form-label">Title</label>
-          <input
-            type="text"
-            class="form-control"
-            name="title"
-            value="<%= data.title %>"
-          /><br /><br />
-        </div>
-        <div class="mb-2">
-          <label for="description" class="form-label">Description</label>
-          <input
-            type="text"
-            class="form-control"
-            name="description"
-            value="<%= data.description %>"
-          /><br /><br />
-        </div>
-        <div class="mb-2">
-          <label for="image" class="form-label">Upload new Image</label>
-          <input type="file" class="form-control" name="listing[image]">
-        </div>
-        <div class="row">
-          <div class="mb-2 col-8">
-            <label for="price" class="form-label">Price</label>
-            <input
-              type="number"
-              class="form-control"
-              name="price"
-              value="<%= data.price %>"
-            /><br /><br />
+
+  <body>
+    <h3>Fill to update</h3>
+    <form method="post" action="/listings/<%= data._id %>?_method=PUT" enctype="multipart/form-data">
+      <div class="row">
+        <div class="col-8 offset-2">
+          <div class="mb-2">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" name="title" value="<%= data.title %>" /><br /><br />
           </div>
-          <div class="mb-2 col-">
-            <label for="location" class="form-label">Location</label>
-            <input
-              type="text"
-              class="form-control"
-              name="location"
-              value="<%= data.location %>"
-            /><br /><br />
+          <div class="mb-2">
+            <label for="description" class="form-label">Description</label>
+            <input type="text" class="form-control" name="description" value="<%= data.description %>" /><br /><br />
           </div>
+          <div class="edit-image-preview">
+            <img src="<%= data.image.url %>" class=" card-img-top" alt="listing image" />
+          </div>
+          <div class="mb-2">
+            <label for="image" class="form-label">Upload new Image</label>
+            <input type="file" class="form-control" name="listing[image]">
+          </div>
+          <div class="row">
+            <div class="mb-2 col-8">
+              <label for="price" class="form-label">Price</label>
+              <input type="number" class="form-control" name="price" value="<%= data.price %>" /><br /><br />
+            </div>
+            <div class="mb-2 col-">
+              <label for="location" class="form-label">Location</label>
+              <input type="text" class="form-control" name="location" value="<%= data.location %>" /><br /><br />
+            </div>
+          </div>
+          <div class="mb-2">
+            <label for="country" class="form-label">Country</label>
+            <input type="text" class="form-control" name="country" value="<%= data.country %>" /><br /><br />
+          </div>
+          <button type="submit" class="btn btn-danger">Submit</button>
         </div>
-        <div class="mb-2">
-          <label for="country" class="form-label">Country</label>
-          <input
-            type="text"
-            class="form-control"
-            name="country"
-            value="<%= data.country %>"
-          /><br /><br />
-        </div>
-        <button type="submit" class="btn btn-danger">Submit</button>
       </div>
-    </div>
-  </form>
-</body>
+    </form>
+  </body>

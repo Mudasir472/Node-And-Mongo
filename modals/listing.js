@@ -4,15 +4,15 @@ const { Schema } = mongoose;
 const Review = require("./Review.js");
 const { ref } = require("joi");
 
-main()
-  .then(() => {
-    console.log("mongo connects successfully");
-  })
-  .catch((err) => console.log(err));
+// main()
+//   .then(() => {
+//     console.log("mongo connects successfully");
+//   })
+//   .catch((err) => console.log(err));
 
-async function main() {
-  await mongoose.connect("mongodb://127.0.0.1:27017/mudduWanderlust");
-}
+// async function main() {
+//   await mongoose.connect("mongodb://127.0.0.1:27017/mudduWanderlust");
+// }
 
 const listingSchema = new Schema({
   title: {
