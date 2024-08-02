@@ -24,9 +24,45 @@ const userRouter = require('./routes/user.router.js');
 var methodOverride = require('method-override')
 app.use(methodOverride('_method'));
 
+
+// use static authenticate method of model in LocalStrategy
+passport.use(new LocalStrategy(User.authenticate()));
+// use static serialize and deserialize of model for passport session support
+passport.serializeUser(User.serializeUser()); //remembers the session when login
+passport.deserializeUser(User.deserializeUser());//forget the session when log out
+
+// Mongoose
+const mongoose = require("mongoose");
+const { name } = require("ejs");
+const exp = require("constants");
+const { wrap } = require("module");
+const dbUrl = process.env.ATLAS_DB_URL;
+main()
+    .then(() => {
+        console.log("mongo connects successfully");
+    })
+    .catch((err) => console.log(err));
+
+async function main() {
+    await mongoose.connect("mongodb://127.0.0.1:27017/mudduWanderlust");
+    // await mongoose.connect(dbUrl);
+}
+
 //session
 const session = require("express-session");
+const MongoStore = require('connect-mongo');
+
+// const store = MongoStore.create({
+//     mongoUrl: dbUrl,
+//     crypto:{
+//         secret: process.env.SESSION_SECRET
+//     },
+//     touchAfter: 24*3600
+// });
+    
 app.use(session({
+    // store: store,
+    // store: MongoStore.create({ mongoUrl: dbUrl,ssl: true, }),
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
@@ -40,29 +76,7 @@ app.use(session({
 //middlewares for passport AUTHENTICATION
 app.use(passport.initialize());
 app.use(passport.session());
-// use static authenticate method of model in LocalStrategy
-passport.use(new LocalStrategy(User.authenticate()));
-// use static serialize and deserialize of model for passport session support
-passport.serializeUser(User.serializeUser()); //remembers the session when login
-passport.deserializeUser(User.deserializeUser());//forget the session when log out
 
-// Mongoose
-const mongoose = require("mongoose");
-const { name } = require("ejs");
-const exp = require("constants");
-const { wrap } = require("module");
-
-const dbUrl = process.env.ATLAS_DB_URL;
-main()
-    .then(() => {
-        console.log("mongo connects successfully");
-    })
-    .catch((err) => console.log(err));
-
-async function main() {
-    await mongoose.connect("mongodb://127.0.0.1:27017/mudduWanderlust");
-    // await mongoose.connect(dbUrl);
-}
 
 // Routes
 app.get("/", (req, res) => {
@@ -96,12 +110,12 @@ app.all("*", (req, res, next) => {
 app.use(cookieParser());
 //middle wares for error handling
 
-// app.use((err, req, res, next) => {
-//     let { statusCode = 500, msg = "default error occur" } = err;
-//     res.status(statusCode).render("error.ejs", { msg });
-// })
+app.use((err, req, res, next) => {
+    let { statusCode = 500, msg = "default error occur" } = err;
+    res.status(statusCode).render("error.ejs", { msg });
+})
 
 const port = 8080;
 app.listen(port, () => {
     console.log("listening at port 8080");
-})
+});

@@ -5,7 +5,7 @@ const { listingSchema } = require("../Schema.js");
 module.exports.index = async (req, res) => {
     res.cookie("name", "Mudasir");
     res.cookie("visitHere", "yes");
-    console.log(req.cookies); //prints unsigned cookie
+     //prints unsigned cookie
     // console.log(req.signedCookies);//prints signed cookies
     const initData = await Listing.find({});
     res.render("wanderlust/index.ejs", { initData })
