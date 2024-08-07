@@ -48,30 +48,30 @@ main()
     .catch((err) => console.log(err));
 
 async function main() {
-    await mongoose.connect("mongodb://127.0.0.1:27017/mudduWanderlust");
-    // await mongoose.connect(dbUrl);
+    // await mongoose.connect("mongodb://127.0.0.1:27017/mudduWanderlust");
+    await mongoose.connect(dbUrl);
 }
 
 //session
 const session = require("express-session");
 const MongoStore = require('connect-mongo');
 
-// const store = MongoStore.create({
-//     mongoUrl: dbUrl,
-//     crypto:{
-//         secret: processh.env.SESSION_SECRET
-//     },
-//     touchAfter: 24*3600
-// });
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    crypto:{
+        secret: process.env.SESSION_SECRET
+    },
+    touchAfter: 24*3600
+});
 
 app.use(session({
-    // store: store,
+    store: store,
     // store: MongoStore.create({ mongoUrl: dbUrl,ssl: true, }),
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
-        expires: Date.now + 7 * 24 * 60 * 60 * 1000,
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true
     }
@@ -80,12 +80,6 @@ app.use(session({
 //middlewares for passport AUTHENTICATION
 app.use(passport.initialize());
 app.use(passport.session());
-
-
-// Routes
-app.get("/", (req, res) => {
-    res.send("I am at root");
-})
 
 //flash MW
 app.use(flash());
