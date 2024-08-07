@@ -12,6 +12,9 @@ const ExpressError = require("./ExpressError.js");
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
 var flash = require('connect-flash');
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -20,6 +23,7 @@ const User = require("./modals/user.js");
 const listingRouter = require("./routes/listing.router.js");
 const reviewRouter = require("./routes/review.router.js");
 const userRouter = require('./routes/user.router.js');
+const emailRouter = require('./routes/email.router.js');
 
 var methodOverride = require('method-override')
 app.use(methodOverride('_method'));
@@ -55,11 +59,11 @@ const MongoStore = require('connect-mongo');
 // const store = MongoStore.create({
 //     mongoUrl: dbUrl,
 //     crypto:{
-//         secret: process.env.SESSION_SECRET
+//         secret: processh.env.SESSION_SECRET
 //     },
 //     touchAfter: 24*3600
 // });
-    
+
 app.use(session({
     // store: store,
     // store: MongoStore.create({ mongoUrl: dbUrl,ssl: true, }),
@@ -89,6 +93,7 @@ app.use((req, res, next) => {
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     res.locals.currUser = req.user;
+    res.locals.mailCode = req.body.mailCode;
     next();
 })
 
@@ -100,6 +105,9 @@ app.use("/listings", listingRouter);
 app.use("/listings/:id", reviewRouter);
 //  user routes here
 app.use("/", userRouter);
+
+//email service route
+app.use("/",emailRouter);
 
 // page not found MW
 app.all("*", (req, res, next) => {

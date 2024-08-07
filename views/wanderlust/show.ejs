@@ -1,4 +1,5 @@
 <% layout('/layouts/boilerplate') -%>
+
   <body>
     <div class="showCont d-flex flex-column justify-content-center align-items-center">
       <h2 class="show-head mb-2">
@@ -37,10 +38,10 @@
         <% } %>
           <hr>
     </div>
-    <hr>
     <% if(data.review.length>0) {%>
       <div class=" show-reviews row">
-        <div class="col-8 offset-2">
+        <div class="col-8 offset-3">
+          <hr>
           <h4>Reviews</h4>
           <% for(review of data.review){ %>
             <div class="card mb-3 col-6">
@@ -66,7 +67,7 @@
 
         <% if(currUser) {%>
           <div class="reviews row">
-            <div class="col-8 offset-2">
+            <div class="col-8 offset-3">
               <h4>Rate us</h4>
               <form action="/listings/<%= data._id %>/review" method="post" novalidate class="needs-validation">
                 <fieldset class="starability-slot">
@@ -96,4 +97,19 @@
             </div>
           </div>
           <% } %>
+            <div class="col-6 offset-3">
+              <h3>You will be there</h3>
+              <div id="map"></div>
+            </div>
+
+            <script>
+              const mapToken = "<%= process.env.MAP_TOKEN %>";
+              console.log(mapToken)
+              mapboxgl.accessToken = mapToken;
+              const map = new mapboxgl.Map({
+                container: 'map', // container ID
+                center: [-74.5, 40], // starting position [lng, lat]. Note that lat must be set between -90 and 90
+                zoom: 9 // starting zoom
+              });
+            </script>
   </body>

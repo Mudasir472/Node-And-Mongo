@@ -1,40 +1,47 @@
-body{
+body {
     color: black;
 }
-.ico i{
+
+.ico i {
     color: red;
     font-size: 2rem;
 }
-.bi{
-    font-size: 1.5rem!important;
+
+.bi {
+    font-size: 1.5rem !important;
 }
-.links a{
+
+.links a {
     color: black;
 }
+
 /* footer */
-footer{
+footer {
     background-color: azure;
 }
 
 /* card */
-.listing-card{
+.listing-card {
     margin-bottom: 2rem !important;
     border: none !important;
 
 }
-.index-img img{
+
+.index-img img {
     border-radius: 12px !important;
     height: 18rem;
     width: 25rem;
 }
-a{
+
+a {
     text-decoration: none;
 }
 
-.card-img-overlay{
+.card-img-overlay {
     opacity: 0;
 }
-.card-img-overlay:hover{
+
+.card-img-overlay:hover {
     width: 25rem;
     opacity: 0.2;
     background-color: white;
@@ -42,23 +49,30 @@ a{
 
 /* show  */
 
-.show-img img{
+.show-img img {
     height: 17rem;
     width: 39rem;
 }
 
-.show-head{
+.show-head {
     width: 49%;
 }
-.showBtns{
+
+.showBtns {
     width: 47%;
 }
 
-.starReview i{
+.starReview i {
     font-size: medium;
 }
 
-.edit-image-preview img{
+.edit-image-preview img {
     width: 18rem;
     height: 9rem;
+}
+
+/* Map */
+#map {
+    height: 321px;
+    width: 432px;
 }

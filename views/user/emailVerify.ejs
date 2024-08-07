@@ -1,0 +1,17 @@
+<% layout('/layouts/boilerplate') -%>
+
+<body>
+    <div class="signUp col-6 offset-3">
+        <h4>Email Verification to Wanderlust</h4>
+        <form action="/signup/verified" method="post" novalidate class="needs-validation">
+            <div class="mb-3">
+                <label for="password" class="form-label">Code</label>
+                <input type="number" class="form-control" name="mailCode" placeholder="enter code">
+                <div class="valid-feedback">
+                    It is Correct!
+                </div>
+            </div>
+            <button class="btn btn-success">Verify</button>
+        </form>
+    </div>
+</body>

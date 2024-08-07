@@ -34,3 +34,7 @@ module.exports.isAuther = async (req,res,next)=>{
     }
     next();
 }
+
+module.exports.emailVerify = async(req,res,next)=>{
+    res.render("/user/emailVerify.ejs")
+}

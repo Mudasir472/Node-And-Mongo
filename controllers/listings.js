@@ -3,8 +3,8 @@ const { listingSchema } = require("../Schema.js");
 
 // Index
 module.exports.index = async (req, res) => {
-    res.cookie("name", "Mudasir");
-    res.cookie("visitHere", "yes");
+    // res.cookie("name", "Mudasir");
+    // res.cookie("visitHere", "yes");
      //prints unsigned cookie
     // console.log(req.signedCookies);//prints signed cookies
     const initData = await Listing.find({});
@@ -69,3 +69,4 @@ module.exports.delete = async (req, res) => {
     req.flash('success', 'Listing Deleted Successsfully')
     res.redirect("/listings");
 }
+
